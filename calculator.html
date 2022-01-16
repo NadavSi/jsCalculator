@@ -1,108 +1,542 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    
-  </head>
-  <body>
-    <div style="width: 30%; margin: auto;">
-      <div>
-        <input type="text" id="calcinput" value="0" style="width: 100%;">
-        <input type="hidden" id="action" value="">
-      </div>
-      <div>
-        <div style="display: flex; justify-content: space-between; padding: 5px 20px;">
-          <div>
-            <button type="button" onclick="calc('(')" style="width: 25px;"> ( </button>
-          </div>
-          <div>
-            <button type="button" onclick="calc(')')" style="width: 25px;"> ) </button>
-          </div>
-          <div>
-            <button type="button" onclick="calc('*')" style="width: 25px;"> * </button>
-          </div>
-          <div>
-            <button type="button" onclick="calc('/')" style="width: 25px;"> / </button>
-          </div>  
-        </div>
-        <div style="display: flex; justify-content: space-between; padding: 5px 20px;">
-          <div>
-            <button type="button" onclick="calc(7)" style="width: 25px;"> 7 </button>
-          </div>
-          <div>
-            <button type="button" onclick="calc(8)" style="width: 25px;"> 8 </button>
-          </div>
-          <div>
-            <button type="button" onclick="calc(9)" style="width: 25px;"> 9 </button>
-          </div>
-          <div>
-            <button type="button" onclick="calc('+')" style="width: 25px;"> + </button>
-          </div>  
-        </div>
-        <div style="display: flex; justify-content: space-between; padding: 5px 20px;">
-          <div>
-            <button type="button" onclick="calc(4)" style="width: 25px;"> 4 </button>
-          </div>
-          <div>
-            <button type="button" onclick="calc(5)" style="width: 25px;"> 5 </button>
-          </div>
-          <div>
-            <button type="button" onclick="calc(6)" style="width: 25px;"> 6 </button>
-          </div>
-          <div>
-            <button type="button" onclick="calc('-')" style="width: 25px;"> - </button>
-          </div>  
-        </div>    
-        <div style="display: flex; justify-content: space-between; padding: 5px 20px;">
-          <div>
-            <button type="button" onclick="calc(1)" style="width: 25px;"> 1 </button>
-          </div>
-          <div>
-            <button type="button" onclick="calc(2)" style="width: 25px;"> 2 </button>
-          </div>
-          <div>
-            <button type="button" onclick="calc(3)" style="width: 25px;"> 3 </button>
-          </div>
-          <div>
-            <button type="button" onclick="calc('=')" style="width: 25px;"> = </button>
-          </div>  
-        </div>    
-        <div style="display: flex; justify-content: space-between; padding: 5px 20px;">
-          <div>
-            <button type="button" onclick="calc('b')" style="width: 25px;"> B </button>
-          </div>
-          <div>
-            <button type="button" onclick="calc(0)" style="width: 25px;"> 0 </button>
-          </div>
-          <div>
-            <button type="button" onclick="calc('.')" style="width: 25px;"> . </button>
-          </div>
-          <div>
-            <button type="button" onclick="calc('c')" style="width: 25px;"> C </button>
-          </div>  
-        </div>      
-      </div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.min.js" integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script type="text/javascript">
-      var stackArr = [];
-      var index = 0;
-      function calc(btn) {
-        var el = document.getElementById('calcinput');
-        var currval = el.value;
-        indexStatus = typeof stackArr[index] == 'undefined' ? false : true;
-        if(Number.isInteger(btn)) {
-          stackArr[index] = indexStatus ? stackArr[index] + btn : '' + btn;
-        }
-        if(btn == '.' && stackArr[index].indexOf('.') == -1) {
-        stackArr[index] = indexStatus ? stackArr[index] + btn : '0' + btn;
-        }
-        if(btn == 'c') {
-          el.value = '0';
-          return;
-        }
-        el.value = currval == '0' ? btn : currval + btn;
-        console.log(stackArr);
-      }
-    </script>
-  </body>
+	<head>
+		<meta content="width=device-width, initial-scale=1" name="viewport" />
+	</head>
+
+	<body style="background-color: black; padding: 10px">
+		<style>
+			.wrapper {
+				width: 30%;
+				margin: auto;
+				padding: 20px;
+				background-color: grey;
+			}
+			button {
+				width: 75px;
+				height: 75px;
+			}
+			.btnsRow {
+				display: flex;
+				justify-content: space-between;
+				padding-top: 5px;
+			}
+			@media screen and (max-width: 900px) {
+				.wrapper {
+					width: 60%;
+				}
+				button {
+					width: 100px;
+					height: 100px;
+					display: flex !important;
+					align-items: center;
+					justify-content: center;
+				}
+				#calcinput {
+					font-size: 100px;
+				}
+			}
+			@media screen and (max-width: 600px) {
+				.wrapper {
+					width: 90%;
+				}
+				button {
+					width: 60px;
+					height: 60px;
+					display: flex !important;
+					align-items: center;
+					justify-content: center;
+				}
+				#calcinput {
+					font-size: 100px;
+				}
+			}
+		</style>
+		<div style="font-size: 40px; text-align: center; color: white">
+			<span>JavaScript Calculator</span>
+		</div>
+		<div
+			style="
+				width: 90%;
+				margin: 20px auto;
+				border: 1px solid lightblue;
+				font-size: 14px;
+				color: white;
+			"
+		>
+			<span
+				>this calculator does basic arithmatic as well as using parentheses. can
+				be used by clicking on displayed button or by keyboard keys.<br />
+				0-9 and arithmetic operation as well as ( and ) are self explanatory.<br />
+				backspace key removes last key stroke.<br />
+				Esc key function as clear oparations<br />
+				equal sign and Enter keys calculates the equation
+			</span>
+		</div>
+		<div class="wrapper">
+			<div>
+				<input
+					type="text"
+					id="calcinput"
+					value="0"
+					style="width: 100%; font-size: 20px; font-weight: bold"
+					readonly
+				/>
+			</div>
+			<div>
+				<div class="btnsRow">
+					<div class="btnDiv">
+						<button
+							type="button"
+							onclick="calc('(')"
+							class="btn btn-success btn-lg"
+						>
+							<span>(</span>
+						</button>
+					</div>
+					<div class="btnDiv">
+						<button
+							type="button"
+							onclick="calc(')')"
+							class="btn btn-success btn-lg"
+						>
+							<span>)</span>
+						</button>
+					</div>
+					<div class="btnDiv">
+						<button
+							type="button"
+							onclick="calc('*')"
+							class="btn btn-success btn-lg"
+						>
+							<span>*</span>
+						</button>
+					</div>
+					<div class="btnDiv">
+						<button
+							type="button"
+							onclick="calc('/')"
+							class="btn btn-success btn-lg"
+						>
+							<span>/</span>
+						</button>
+					</div>
+				</div>
+				<div class="btnsRow">
+					<div>
+						<button
+							type="button"
+							onclick="calc(7)"
+							class="btn btn-primary btn-lg"
+						>
+							<span>7</span>
+						</button>
+					</div>
+					<div>
+						<button
+							type="button"
+							onclick="calc(8)"
+							class="btn btn-primary btn-lg"
+						>
+							<span>8</span>
+						</button>
+					</div>
+					<div>
+						<button
+							type="button"
+							onclick="calc(9)"
+							class="btn btn-primary btn-lg"
+						>
+							<span>9</span>
+						</button>
+					</div>
+					<div>
+						<button
+							type="button"
+							onclick="calc('+')"
+							class="btn btn-success btn-lg"
+						>
+							<span>+</span>
+						</button>
+					</div>
+				</div>
+				<div class="btnsRow">
+					<div>
+						<button
+							type="button"
+							onclick="calc(4)"
+							class="btn btn-primary btn-lg"
+						>
+							<span>4</span>
+						</button>
+					</div>
+					<div>
+						<button
+							type="button"
+							onclick="calc(5)"
+							class="btn btn-primary btn-lg"
+						>
+							<span>5</span>
+						</button>
+					</div>
+					<div>
+						<button
+							type="button"
+							onclick="calc(6)"
+							class="btn btn-primary btn-lg"
+						>
+							<span>6</span>
+						</button>
+					</div>
+					<div>
+						<button
+							type="button"
+							onclick="calc('-')"
+							class="btn btn-success btn-lg"
+						>
+							<span>-</span>
+						</button>
+					</div>
+				</div>
+				<div class="btnsRow">
+					<div>
+						<button
+							type="button"
+							onclick="calc(1)"
+							class="btn btn-primary btn-lg"
+						>
+							<span>1</span>
+						</button>
+					</div>
+					<div>
+						<button
+							type="button"
+							onclick="calc(2)"
+							class="btn btn-primary btn-lg"
+						>
+							<span>2</span>
+						</button>
+					</div>
+					<div>
+						<button
+							type="button"
+							onclick="calc(3)"
+							class="btn btn-primary btn-lg"
+						>
+							<span>3</span>
+						</button>
+					</div>
+					<div>
+						<button
+							type="button"
+							onclick="calc('=')"
+							class="btn btn-warning btn-lg"
+						>
+							<span>=</span>
+						</button>
+					</div>
+				</div>
+				<div class="btnsRow">
+					<div>
+						<button
+							type="button"
+							onclick="calc('B')"
+							class="btn btn-danger btn-lg"
+						>
+							<span>B</span>
+						</button>
+					</div>
+					<div>
+						<button
+							type="button"
+							onclick="calc(0)"
+							class="btn btn-primary btn-lg"
+						>
+							<span>0</span>
+						</button>
+					</div>
+					<div>
+						<button
+							type="button"
+							onclick="calc('.')"
+							class="btn btn-primary btn-lg"
+						>
+							<span>.</span>
+						</button>
+					</div>
+					<div>
+						<button
+							type="button"
+							onclick="calc('C')"
+							class="btn btn-danger btn-lg"
+						>
+							<span>C</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css"
+			integrity="sha512-T584yQ/tdRR5QwOpfvDfVQUidzfgc2339Lc8uBDtcp/wYu80d7jwBgAxbyMh0a9YM9F8N3tdErpFI8iaGx6x5g=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
+		<script
+			src="https://code.jquery.com/jquery-3.6.0.min.js"
+			integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+			crossorigin="anonymous"
+		></script>
+		<script type="text/javascript">
+			document.addEventListener("keydown", convertKey);
+			var stackArr = ["0"]; //the array of operations and numbers
+			var index = 0; //current cell index
+			var parenthesesOpen = false; //indicates open parentheses
+			var isReset = false; //set to true after equation is summed in order to reset if next pressed key is number
+			function convertKey(e) {
+				if (e.keyCode >= 48 && e.keyCode <= 57 && e.shiftKey == false) {
+					//if number key numbers row
+					calc(e.keyCode - 48);
+				} else if (e.keyCode >= 96 && e.keyCode <= 105 && e.shiftKey == false) {
+					//if number key right keypad
+					calc(e.keyCode - 96);
+				} else if (e.keyCode == 8) {
+					//if backspace key
+					calc("B");
+				} else if (e.keyCode == 27) {
+					//if esc key
+					calc("C");
+				} else if (e.keyCode == 110 || e.keyCode == 190) {
+					//if . key anywhere
+					calc(".");
+				} else if (
+					e.keyCode == 107 ||
+					(e.keyCode == 187 && e.shiftKey == false)
+				) {
+					//if + key anywhere
+					calc("+");
+				} else if (e.keyCode == 109 || e.keyCode == 189) {
+					//if - key anywhere
+					calc("-");
+				} else if (
+					e.keyCode == 106 ||
+					(e.keyCode == 56 && e.shiftKey == true)
+				) {
+					//if * key anywhere
+					calc("*");
+				} else if (e.keyCode == 111 || e.keyCode == 81) {
+					//if / key anywhere
+					calc("/");
+				} else if (
+					e.keyCode == 13 ||
+					(e.keyCode == 187 && e.shiftKey == true)
+				) {
+					//if = key anywhere or enter key
+					calc("=");
+				} else if (e.keyCode == 57 && e.shiftKey == true) {
+					//if ( key
+					calc("(");
+				} else if (e.keyCode == 48 && e.shiftKey == true) {
+					//if ) key
+					calc(")");
+				}
+			}
+			//function checks if the current used cell is undefined
+			function checkCurrentCellforData() {
+				return typeof stackArr[index] == "undefined" ? false : true;
+			}
+			function automultiply() {
+				if (
+					stackArr[index] == ")" ||
+					(!isNaN(stackArr[index]) && stackArr[index] > 0)
+				) {
+					stackArr[++index] = "*";
+				}
+			}
+			//function sums all cells in given array and return the sum
+			function calcparentheses(slicedArr) {
+				slicedArr[0] = "+";
+				// console.log(slicedArr);
+				var sum = 0;
+				//run on array from ( to ) replace open parentheses with + to start sum with 0 and not include closer in loop
+				for (ind = 0; ind < slicedArr.length - 1; ind = ind + 2) {
+					val = parseFloat(slicedArr[ind + 1]);
+					if (isNaN(val)) {
+						continue;
+					}
+					action = slicedArr[ind];
+					// console.log(sum, action, val);
+					sum =
+						action == "+"
+							? sum + val
+							: action == "-"
+							? sum - val
+							: action == "*"
+							? sum * val
+							: sum / val;
+				}
+				//return full number with decimal upto 2 digits after decimal only if needed
+				// return (Number.isSafeInteger(sum) ? sum : sum.toFixed(2)).toString();
+				return sum.toString();
+			}
+			//function does operation according to button pressed
+			function calc(btn) {
+				var el = document.getElementById("calcinput");
+				switch (btn) {
+					case 0:
+					case 1:
+					case 2:
+					case 3:
+					case 4:
+					case 5:
+					case 6:
+					case 7:
+					case 8:
+					case 9:
+						//checks if reset is needed and if so sets first cell to 0
+						if (isReset) {
+							stackArr[0] = "0";
+							isReset = false;
+						}
+						//checks if current cell holds operation or parentheses. if closed parentheses and next actio is number then automatically multiply with parentheses result
+						if (isNaN(stackArr[index])) {
+							automultiply();
+							++index;
+						}
+						stackArr[index] =
+							stackArr[index] > "0"
+								? stackArr[index] + btn.toString()
+								: "" + btn.toString();
+						break;
+					case ".":
+						//checks if reset is needed and if so sets first cell to 0
+						if (isReset) {
+							stackArr[0] = "0";
+							isReset = false;
+						}
+						//checks if current cell index is bigger then 0 and current value in cell is operation. if so adds 0 before adding decimal
+						if (index > 0 && isNaN(stackArr[index])) {
+							stackArr[++index] = "0";
+						}
+						//does not allow for 2 dots in number
+						stackArr[index] =
+							stackArr[index] + (stackArr[index].indexOf(".") == -1 ? btn : "");
+						break;
+					case "+":
+					case "-":
+					case "*":
+					case "/":
+						isReset = false;
+						//checks if not open parentheses and if so checks that current cell is number or closed parentheses and if so moves one cell forword before adding operation
+						if (stackArr[index] != "(") {
+							if (!isNaN(stackArr[index]) || stackArr[index] == ")") {
+								++index;
+							}
+							stackArr[index] = btn;
+						}
+						break;
+					case "=":
+						//last check for open parentheses
+						if (parenthesesOpen) {
+							stackArr[++index] = ")";
+						}
+						var nextParenthesesOpen = 0;
+						var nextParenthesesClose = 0;
+						var parenthesesstack = stackArr;
+						var counter = 0;
+						//loop on stack cells and finding all parentheses open and close indexes
+						for (i = 0; i < stackArr.length; ++i) {
+							nextParenthesesOpen = parenthesesstack.findIndex(
+								(operator) => operator === "("
+							);
+							nextParenthesesClose = parenthesesstack.findIndex(
+								(operator) => operator === ")"
+							);
+							//if found pair then summing operations inside and return sum instead of open parentheses cell.
+							if (nextParenthesesOpen > -1 && nextParenthesesClose > -1) {
+								sum = calcparentheses(
+									parenthesesstack.slice(
+										nextParenthesesOpen,
+										nextParenthesesClose + 1
+									)
+								);
+								//all other cells are deleted
+								parenthesesstack.splice(
+									nextParenthesesOpen,
+									nextParenthesesClose - nextParenthesesOpen + 1,
+									sum
+								);
+								// console.log(parenthesesstack);
+							} else {
+								i = stackArr.length;
+							}
+							// console.log(nextParenthesesOpen, nextParenthesesClose);
+						}
+						//after loop last sum for operations left outside of parentheses. adding open and close parentheses for function sake. reseting stack leaving only answer in first cell
+						parenthesesstack[parenthesesstack.length] = ")";
+						parenthesesstack.unshift("(");
+						sum = calcparentheses(parenthesesstack);
+						stackArr = [];
+						index = 0;
+						stackArr[index] = sum;
+						isReset = true;
+						parenthesesOpen = false;
+						break;
+					case "(":
+						isReset = false;
+						//checks if not already used open parentheses
+						if (!parenthesesOpen) {
+							//if not selected operation before open parentheses then default is multiply
+							automultiply();
+							//checks if first cell and number inside is 0. if not so moves one cell forward
+							if (index == "0" && stackArr[index] == "0") {
+								stackArr[index] = btn;
+							} else {
+								++index;
+								stackArr[index] = btn;
+							}
+							//sets opened parentheses
+							parenthesesOpen = true;
+						}
+						break;
+					case ")":
+						isReset = false;
+						//if current cell value is open parentheses the reset because it is pointless
+						if (stackArr[index] == "(") {
+							stackArr[index] = "";
+							--index;
+						} else if (parenthesesOpen) {
+							stackArr[++index] = btn;
+						}
+						parenthesesOpen = false;
+						break;
+					case "B":
+						//removes last entered key
+						if (stackArr[index].length > 1) {
+							stackArr[index] = stackArr[index].slice(
+								0,
+								stackArr[index].length - 1
+							);
+						} else {
+							stackArr[index] = "";
+							if (index > 0) {
+								--index;
+							} else {
+								stackArr[index] = "0";
+							}
+						}
+						break;
+					case "C":
+						//reset calculator
+						stackArr = ["0"];
+						index = 0;
+						parenthesesOpen = false;
+						break;
+				}
+				// console.log(stackArr, index);
+				el.value = stackArr.join("");
+			}
+		</script>
+	</body>
 </html>
